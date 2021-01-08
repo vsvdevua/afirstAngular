@@ -10,17 +10,19 @@ import {Category} from '../../model/Category';
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[];
+  selectedCategory: Category;
 
   constructor(private dataHandler: DataHandlerService) {
   }
 
   ngOnInit(): void {
-   this.dataHandler.categoriesSubject.subscribe(categories => this.categories = categories);
+    this.dataHandler.categoriesSubject.subscribe(categories => this.categories = categories);
 
   }
 
   // tslint:disable-next-line:typedef
   showTasksByCategory(category: Category) {
-   this.dataHandler.fillTasksByCategories(category);
+    this.selectedCategory = category;
+    this.dataHandler.fillTasksByCategories(category);
   }
 }

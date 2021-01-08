@@ -17,4 +17,8 @@ export class TasksComponent implements OnInit {
     this.dataHandler.tasksSubject.subscribe(tasks => this.tasks = tasks);
   }
 
+  // tslint:disable-next-line:typedef
+  toggleTaskCompleted(task: Task) {
+    task.completed = !task.completed;
+  }
 }

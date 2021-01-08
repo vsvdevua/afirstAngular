@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-header card-header-warning">
+    <h4 class="card-title">Task list</h4>
+
+  </div>
+  <div class="card-body table-responsive">
+    <table class="table table-hover">
+      <thead class="text-warning">
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th>Data</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{task.id}}</td>
+        <td>{{task.title}}</td>
+        <td>{{task.category.title}}</td>
+        <td>{{task.priority.title}}</td>
+        <td>{{task.completed}}</td>
+        <td>{{task.date}}</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

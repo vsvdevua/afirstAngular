@@ -85,6 +85,7 @@ export class TestData {
     {
       id: 8,
       title: 'make dinner for family',
+      priority: TestData.priorities[2],
       completed: false,
       category: TestData.categories[5],
       date: new Date('2021-04-11')

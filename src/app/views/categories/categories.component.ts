@@ -16,13 +16,14 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataHandler.categoriesSubject.subscribe(categories => this.categories = categories);
+    // @ts-ignore
+    this.dataHandler.getCategories().subscribe(categories => this.categories = categories);
 
   }
 
   // tslint:disable-next-line:typedef
   showTasksByCategory(category: Category) {
     this.selectedCategory = category;
-    this.dataHandler.fillTasksByCategories(category);
+   // this.dataHandler.fillTasksByCategories(category);
   }
 }

@@ -2,8 +2,8 @@
   <div class="card-header card-header-warning">
     <h4 class="card-title">Task list</h4>
   </div>
-  <div class="card-body table-responsive">
-   <table [dataSource]="dataSource" mat-table>
+  <div class="card-body table-responsive" *ngIf="tasks.length>0">
+   <table [dataSource]="dataSource" mat-table matSort>
      <!-- priority color-->
      <ng-container matColumnDef="color">
        <th *matHeaderCellDef mat-header-cell></th>
@@ -19,28 +19,28 @@
 
      <!--task title-->
      <ng-container matColumnDef="title">
-       <th *matHeaderCellDef mat-header-cell>Name</th>
+       <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
        <td class="col-title" *matCellDef="let task" [class.completed]="task.completed" mat-cell>
          {{task.title}}
        </td>
      </ng-container>
      <!--data-->
      <ng-container matColumnDef="date">
-       <th *matHeaderCellDef mat-header-cell>Date</th>
+       <th *matHeaderCellDef mat-header-cell mat-sort-header>Date</th>
        <td class="col-date" *matCellDef="let task" [ngClass]="{'completed': task.completed, 'nodate' : task.date == null}" mat-cell>
          {{task.date | date: "short"}}
        </td>
      </ng-container>
      <!--priority-->
      <ng-container matColumnDef="priority">
-       <th *matHeaderCellDef mat-header-cell>Priority</th>
+       <th *matHeaderCellDef mat-header-cell mat-sort-header>Priority</th>
        <td class="col-priority" *matCellDef="let task" [ngClass]="{'completed': task.completed, 'nopriority' : task.priority == null}" mat-cell>
          {{task.priority ? task.priority.title : "without priority"}}
        </td>
      </ng-container>
      <!--category-->
      <ng-container matColumnDef="category">
-       <th *matHeaderCellDef mat-header-cell>Category</th>
+       <th *matHeaderCellDef mat-header-cell mat-sort-header>Category</th>
        <td class="col-category" *matCellDef="let task" [ngClass]="{'completed': task.completed, 'nocategory' : task.category == null,
 'link': !task.completed && task.category}" mat-cell>
          {{task.category ? task.category.title : "without category"}}
@@ -51,6 +51,7 @@
      <!--columns-->
      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
    </table>
-
+<mat-paginator [pageSizeOptions]="[10,20,50,100]" showFirstLastButtons></mat-paginator>
   </div>
+  <div *ngIf="tasks.length == 0"><p class="not-found">Not Found</p></div>
 </div>

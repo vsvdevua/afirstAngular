@@ -5,3 +5,29 @@
 .novalue{
   color: #adadad;
 }
+.col-id{
+  width: 4%;
+  text-align: center;
+}
+.col-title{
+  width: 40%;
+}
+.col-priority{
+  width: 10%;
+}
+.col-category{
+  width: 10%;
+}
+.col-select{
+  width: 3%;
+}
+
+.col-operations{
+  width: 8%;
+}
+.col-color{
+  width: 1%;
+}
+.col-date{
+  width: 10%;
+}

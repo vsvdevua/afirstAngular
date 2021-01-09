@@ -1,40 +1,56 @@
 <div class="card">
   <div class="card-header card-header-warning">
     <h4 class="card-title">Task list</h4>
-
   </div>
   <div class="card-body table-responsive">
-    <table class="table table-hover">
-      <thead class="text-warning">
-      <th>№</th>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Priority</th>
-      <th>Data</th>
-      <th>Status</th>
+   <table [dataSource]="dataSource" mat-table>
+     <!-- priority color-->
+     <ng-container matColumnDef="color">
+       <th *matHeaderCellDef mat-header-cell></th>
+       <td class="col-color" *matCellDef="let task" [style.background-color]="getPriorityColor(task)" mat-cell></td>
+     </ng-container>
+     <!-- numbers-->
+     <ng-container matColumnDef="id">
+       <th *matHeaderCellDef mat-header-cell></th>
+       <td class="col-id" *matCellDef="let index = index;" mat-cell>
+         {{index+1}}
+       </td>
+     </ng-container>
 
-      </thead>
-      <tbody>
-      <tr *ngFor="let task of tasks; let i = index" [class.completed]="task.completed">
-        <td>{{i+1}}</td>
-        <td>{{task.title}}</td>
-        <td [class.novalue]="task.category == null">{{task.category != null ? task.category.title : 'without category'}}</td>
-        <td [class.novalue]="task.priority == null">{{task.priority != null ? task.priority.title : 'without priority'}}</td>
-        <td [class.novalue]="task.date == null">{{task.date != null ? (task.date | date : 'short') : 'without date'}}</td>
-        <td>
-          <div class="form-check">
-            <label class="form-check-label">
-              <input class="form-check-input" type="checkbox" [checked]="task.completed" value=""
-              (click)="toggleTaskCompleted(task)">
-              <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-            </label>
-          </div>
-        </td>
-      </tr>
+     <!--task title-->
+     <ng-container matColumnDef="title">
+       <th *matHeaderCellDef mat-header-cell>Name</th>
+       <td class="col-title" *matCellDef="let task" [class.completed]="task.completed" mat-cell>
+         {{task.title}}
+       </td>
+     </ng-container>
+     <!--data-->
+     <ng-container matColumnDef="date">
+       <th *matHeaderCellDef mat-header-cell>Date</th>
+       <td class="col-date" *matCellDef="let task" [ngClass]="{'completed': task.completed, 'nodate' : task.date == null}" mat-cell>
+         {{task.date | date: "short"}}
+       </td>
+     </ng-container>
+     <!--priority-->
+     <ng-container matColumnDef="priority">
+       <th *matHeaderCellDef mat-header-cell>Priority</th>
+       <td class="col-priority" *matCellDef="let task" [ngClass]="{'completed': task.completed, 'nopriority' : task.priority == null}" mat-cell>
+         {{task.priority ? task.priority.title : "without priority"}}
+       </td>
+     </ng-container>
+     <!--category-->
+     <ng-container matColumnDef="category">
+       <th *matHeaderCellDef mat-header-cell>Category</th>
+       <td class="col-category" *matCellDef="let task" [ngClass]="{'completed': task.completed, 'nocategory' : task.category == null,
+'link': !task.completed && task.category}" mat-cell>
+         {{task.category ? task.category.title : "without category"}}
+       </td>
+     </ng-container>
+     <!--table header-->
+     <tr *matHeaderRowDef="displayedColumns;" mat-header-row></tr>
+     <!--columns-->
+     <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+   </table>
 
-      </tbody>
-    </table>
   </div>
 </div>

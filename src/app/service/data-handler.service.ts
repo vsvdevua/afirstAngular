@@ -4,7 +4,9 @@ import {Task} from '../model/Task';
 import {Observable} from 'rxjs';
 import {TaskImpl} from '../data/dao/impl/TaskImpl';
 import {CategoryImpl} from '../data/dao/impl/CategoryImpl';
+import {Priority} from '../model/Priority';
 
+// @ts-ignore
 @Injectable({
   providedIn: 'root'
 })
@@ -35,5 +37,9 @@ export class DataHandlerService {
   getAllTasks(): Observable<Task>[] {
     //  this.tasksSubject.next(TestData.tasks);
     return this.taskImpl.getAll();
+  }
+
+  searchTasks(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
+    return this.taskImpl.search(category, searchText, status, priority);
   }
 }

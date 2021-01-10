@@ -6,6 +6,7 @@ import { Priority } from 'src/app/model/Priority';
 import {TestData} from '../../TestData';
 
 export class TaskImpl implements TaskDao{
+
   add(T): Observable<Task> {
     return undefined;
   }
@@ -40,11 +41,19 @@ export class TaskImpl implements TaskDao{
   }
 
   search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
-    return undefined;
+    return of(this.searhTodo(category, searchText, status, priority) );
   }
 
   update(T): Observable<Task> {
     return undefined;
   }
 
+  private searhTodo(category: Category, searchText: string, status: boolean, priority: Priority): Task[] {
+
+    let allTasks = TestData.tasks;
+    if (category != null){
+      allTasks = allTasks.filter(todo => todo.category === category);
+    }
+    return allTasks;
+  }
 }

@@ -1,32 +1,43 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {DataHandlerService} from '../../service/data-handler.service';
 import {Task} from '../../model/Task';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {EditTaskDialogComponent} from '../../dialog/edit-task-dialog/edit-task-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit, AfterViewInit {
+export class TasksComponent implements OnInit {
   private displayedColumns: string[] = ['color', 'id', 'title', 'priority', 'category'];
   private dataSource: MatTableDataSource<Task>;
-  tasks: Task[];
+  private tasks: Task[];
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
 
-  constructor(private dataHandler: DataHandlerService) {
+  constructor(private dataHandler: DataHandlerService, private dialog: MatDialog) {
   }
 
+  @Input('tasks')
+// tslint:disable-next-line:typedef
+  private set setTasks(tasks: Task[]) {
+    this.tasks = tasks;
+    this.fillTable();
+  }
+
+  @Output()
+  updateTask = new EventEmitter<Task>();
   ngOnInit(): void {
-   // this.dataHandler.tasksSubject.subscribe(tasks => this.tasks = tasks);
+    // this.dataHandler.tasksSubject.subscribe(tasks => this.tasks = tasks);
 
     // @ts-ignore
-    this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
+    // this.dataHandler.getAllTasks().subscribe(tasks => this.tasks = tasks);
     this.dataSource = new MatTableDataSource();
-    this.refreshTable();
+    this.fillTable();
   }
 
   // tslint:disable-next-line:typedef
@@ -35,7 +46,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
   }
 
   // tslint:disable-next-line:typedef
-  private getPriorityColor(task: Task) {
+  private getPriorityColor(task: Task): string {
     if (task.priority && task.priority.color) {
       return task.priority.color;
     }
@@ -46,7 +57,10 @@ export class TasksComponent implements OnInit, AfterViewInit {
   }
 
   // tslint:disable-next-line:typedef
-  private refreshTable() {
+  private fillTable(): void {
+    if (!this.dataSource) {
+      return;
+    }
     this.dataSource.data = this.tasks;
     this.addTableObjects();
     this.dataSource.sortingDataAccessor = (task, colName) => {
@@ -68,14 +82,24 @@ export class TasksComponent implements OnInit, AfterViewInit {
     };
   }
 
-  ngAfterViewInit(): void {
-    this.addTableObjects();
-  }
 
 
   // tslint:disable-next-line:typedef
   private addTableObjects() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  // tslint:disable-next-line:typedef
+  onClickTask(task: any) {
+    this.updateTask.emit(task);
+  }
+
+ private openEditTaskDialog(task: Task): void {
+    const dialogRef = this.dialog.open(
+      EditTaskDialogComponent, {data: [task, 'Redact task'], autoFocus: false });
+    dialogRef.afterClosed().subscribe(result => {
+     // hand
+    });
   }
 }

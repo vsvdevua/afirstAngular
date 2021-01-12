@@ -1,5 +1,6 @@
 <div class="wrapper ">
-<app-categories (selectCategory)="onSelectCategory($event)" [categories]="categories"></app-categories>
+<app-categories (selectCategory)="onSelectCategory($event)"
+                [categories]="categories"></app-categories>
 
   <div class="main-panel">
     <!-- Navbar -->
@@ -71,11 +72,13 @@
     <div class="content">
       <div class="container-fluid">
 
-
         <div class="row">
 
-          <div class="col-md-12">
-         <app-tasks [tasks]="tasks" (updateTask)="onUpdateTask($event)"></app-tasks>
+          <div class="col-12">
+         <app-tasks [tasks]="tasks"
+                    (updateTask)="onUpdateTask($event)"
+                    (deleteTask)="onDeleteTask($event)"
+         ></app-tasks>
           </div>
         </div>
       </div>
@@ -108,7 +111,7 @@
         </nav>
         <div class="copyright float-right">
           &copy;
-          2021, made with <i class="material-icons">favorite</i> by
+        2021, made with <i class="material-icons">favorite</i> by
           <a href="https://vsvdev.co.ua/about" target="_blank">VSVDev</a> for a better web.
         </div>
       </div>

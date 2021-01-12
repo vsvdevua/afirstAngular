@@ -10,7 +10,7 @@ import {Category} from '../../model/Category';
 })
 export class CategoriesComponent implements OnInit {
   @Input()
-  private categories: Category[];
+  categories: Category[];
   @Output()
   selectCategory = new EventEmitter<Category>();
 
@@ -25,8 +25,7 @@ export class CategoriesComponent implements OnInit {
 
   }
 
-  // tslint:disable-next-line:typedef
-  showTasksByCategory(category: Category) {
+  showTasksByCategory(category: Category): void {
     if (this.selectedCategory === category) {
       return;
     }

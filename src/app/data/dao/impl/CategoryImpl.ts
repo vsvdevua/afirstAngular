@@ -3,8 +3,8 @@ import {Observable, of} from 'rxjs';
 import {Category} from '../../../model/Category';
 import {TestData} from '../../TestData';
 
-export class CategoryImpl implements CategoryDao{
-  add(T): Observable<Category> {
+export class CategoryImpl implements CategoryDao {
+  add(category: Category): Observable<Category> {
     return undefined;
   }
 
@@ -16,8 +16,7 @@ export class CategoryImpl implements CategoryDao{
     return undefined;
   }
 
-  getAll(): Observable<Category>[] {
-    // @ts-ignore
+  getAll(): Observable<Category[]> {
     return of(TestData.categories);
   }
 
@@ -25,7 +24,7 @@ export class CategoryImpl implements CategoryDao{
     return undefined;
   }
 
-  update(T): Observable<Category> {
+  update(category: Category): Observable<Category> {
     return undefined;
   }
 

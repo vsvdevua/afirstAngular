@@ -43,8 +43,32 @@
      <ng-container matColumnDef="category">
        <th *matHeaderCellDef mat-header-cell mat-sort-header>Category</th>
        <td class="col-category" *matCellDef="let task"
-           [ngClass]="{'completed': task.completed, 'novalue' : task.category == null}" mat-cell>
+           [ngClass]="{'completed': task.completed, 'novalue' : task.category == null, 'link': !task.completed && task.cachePath}"
+           (click)="!task.completed && task.category && onSelectCategory(task.category)" mat-cell>
          {{task.category ? task.category.title : "without category"}}
+       </td>
+     </ng-container>
+     <ng-container matColumnDef="operations">
+       <th mat-header-cell *matHeaderCellDef></th>
+       <td class="col-operations" mat-cell *matCellDef="let task"
+       [class.completed]="task.completed">
+         <button mat-icon-button (click)="openDeleteDialog(task)" class="delete-icon">
+           <mat-icon aria-hidden="false">delete</mat-icon>
+         </button>
+         <button mat-icon-button (click)="openEditTaskDialog(task)" class="edit-icon">
+           <mat-icon aria-hidden="false">edit</mat-icon>
+         </button>
+       </td>
+     </ng-container>
+
+     <ng-container matColumnDef="select">
+       <th mat-header-cell *matHeaderCellDef></th>
+       <td class="col-select text-right" mat-cell *matCellDef="let task">
+         <mat-checkbox (click)="$event.stopPropagation()"
+                       (change)="$event ? onToggleStatus(task) : null"
+                        [checked]="task.completed">
+
+         </mat-checkbox>
        </td>
      </ng-container>
      <!--table header-->

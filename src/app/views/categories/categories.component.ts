@@ -13,7 +13,7 @@ export class CategoriesComponent implements OnInit {
   categories: Category[];
   @Output()
   selectCategory = new EventEmitter<Category>();
-
+  @Input()
   selectedCategory: Category;
 
   constructor(private dataHandler: DataHandlerService) {

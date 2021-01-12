@@ -6,6 +6,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {EditTaskDialogComponent} from '../../dialog/edit-task-dialog/edit-task-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
+import {Category} from '../../model/Category';
 
 @Component({
   selector: 'app-tasks',
@@ -13,7 +15,7 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
-  private displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category'];
+  private displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
   private dataSource: MatTableDataSource<Task>;
   private tasks: Task[];
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
@@ -26,6 +28,8 @@ export class TasksComponent implements OnInit {
   deleteTask = new EventEmitter<Task>();
   @Output()
   updateTask = new EventEmitter<Task>();
+  @Output()
+  selectCategory = new EventEmitter<Category>();
 
   @Input('tasks')
   private set setTasks(tasks: Task[]) {
@@ -37,11 +41,6 @@ export class TasksComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
     this.fillTable();
-  }
-
-  // tslint:disable-next-line:typedef
-  toggleTaskCompleted(task: Task) {
-    task.completed = !task.completed;
   }
 
   private getPriorityColor(task: Task): string {
@@ -79,16 +78,10 @@ export class TasksComponent implements OnInit {
     };
   }
 
-
   private addTableObjects(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-
-  // tslint:disable-next-line:typedef
-  // onClickTask(task: any) {
-  //   this.updateTask.emit(task);
-  // }
 
   private openEditTaskDialog(task: Task): void {
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
@@ -113,5 +106,33 @@ export class TasksComponent implements OnInit {
         return;
       }
     });
+  }
+
+  // tslint:disable-next-line:typedef
+  private openDeleteDialog(task: Task) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '500px',
+      data: {
+        dialogTitle: 'Confirm action',
+        message: `You really want to delete: "${task.title}"?`
+      },
+      autoFocus: false
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteTask.emit(task);
+      }
+    });
+  }
+
+  // tslint:disable-next-line:typedef
+  private onToggleStatus(task: Task) {
+    task.completed = !task.completed;
+    this.updateTask.emit(task);
+  }
+
+  // tslint:disable-next-line:typedef
+  private onSelectCategory(category: Category) {
+    this.selectCategory.emit(category);
   }
 }

@@ -65,4 +65,17 @@ export class AppComponent implements OnInit {
       });
     });
   }
+  // tslint:disable-next-line:typedef
+    private onDeleteCategory(category: Category){
+    this.dataHandler.deleteCategory(category.id).subscribe(cat => {
+      this.selectedCategory = null;
+      this.onSelectCategory(this.selectedCategory);
+    });
+  }
+  // tslint:disable-next-line:typedef
+  private onUpdateCategory(category: Category){
+    this.dataHandler.updateCategory(category).subscribe(() => {
+      this.onSelectCategory(this.selectedCategory);
+    });
+  }
 }

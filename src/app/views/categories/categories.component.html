@@ -5,15 +5,30 @@
     Tip 2: you can also add an image using data-image tag
 -->
   <div class="logo"><a href="https://vsvdev.co.ua" class="simple-text logo-normal">
-   VSVDev
+   Categories
   </a></div>
   <div class="sidebar-wrapper">
     <ul class="nav">
+
+      <li class="nav-item category" (click)="showTasksByCategory(null)"
+          [class.active]="selectedCategory === null">
+        <a class="nav-link pointer">
+          <span class="all-category-title">All</span>
+        </a>
+      </li>
+
       <li class="nav-item pointer" (click)="showTasksByCategory(category)"
-          *ngFor="let category of categories"
-      [class.active]="category === selectedCategory">
+          *ngFor="let category of categories; let index = index"
+      [class.active]="category === selectedCategory"
+      (mouseleave)="showEditIcon(null)"
+      (mouseenter)="showEditIcon(index)">
         <a class="nav-link">
-          <p>{{category.title}}</p>
+          <span class="category-title">{{category.title}}</span>
+          <span class="edit-category-icon-area">
+            <mat-icon class="edit-category-icon"
+              *ngIf="indexMouseMove === index"
+              (click)="$event.stopPropagation(); openEditDialog(category)">edit</mat-icon>
+          </span>
         </a>
       </li>
 

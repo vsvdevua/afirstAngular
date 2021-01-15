@@ -47,6 +47,6 @@
 }
 .mat-header-cell{
   font-size: 1.063rem;
-  color: #9c27b0;
+  color: #9c27b0 !important;
   font-weight: normal;
 }

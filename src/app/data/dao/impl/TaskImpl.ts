@@ -7,8 +7,12 @@ import {TestData} from '../../TestData';
 
 export class TaskImpl implements TaskDao {
 
-  add(T): Observable<Task> {
-    return undefined;
+  add(task: Task): Observable<Task> {
+    if (task.id == null || task.id === 0) {
+      task.id = this.getLastIdTask();
+    }
+    TestData.tasks.push(task);
+    return of(task);
   }
 
   delete(id: number): Observable<Task> {
@@ -43,7 +47,7 @@ export class TaskImpl implements TaskDao {
   }
 
   search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {
-    return of(this.searhTodo(category, searchText, status, priority));
+    return of(this.searhTasks(category, searchText, status, priority));
   }
 
   update(task: Task): Observable<Task> {
@@ -52,12 +56,27 @@ export class TaskImpl implements TaskDao {
     return of(task);
   }
 
-  private searhTodo(category: Category, searchText: string, status: boolean, priority: Priority): Task[] {
+  private searhTasks(category: Category, searchText: string, status: boolean, priority: Priority): Task[] {
 
     let allTasks = TestData.tasks;
+    if (status != null) {
+      allTasks = allTasks.filter(task => task.completed === status);
+    }
     if (category != null) {
-      allTasks = allTasks.filter(todo => todo.category === category);
+      allTasks = allTasks.filter(task => task.category === category);
+    }
+    if (priority != null) {
+      allTasks = allTasks.filter(task => task.priority === priority);
+    }
+    if (searchText != null) {
+      allTasks = allTasks.filter(task => task.title.toUpperCase().includes(
+        searchText.toUpperCase()
+      ));
     }
     return allTasks;
+  }
+
+  private getLastIdTask(): number {
+    return Math.max.apply(Math, TestData.tasks.map(task => task.id)) + 1;
   }
 }

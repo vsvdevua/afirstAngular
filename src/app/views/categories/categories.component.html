@@ -4,11 +4,35 @@
 
     Tip 2: you can also add an image using data-image tag
 -->
-  <div class="logo"><a href="https://vsvdev.co.ua" class="simple-text logo-normal">
-   Categories
-  </a></div>
+  <div class="logo">
+    <span class="nav-title">Categories</span>
+    <span class="add-icon-area">
+      <button mat-icon-button class="add-icon" (click)="openAddDialog()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </span>
+  </div>
+
   <div class="sidebar-wrapper">
     <ul class="nav">
+            <!--search category-->
+      <div class="search-category-area">
+        <mat-form-field class="example-full-width">
+          <input
+          #inputSearchCategory
+          (keydown.escape)="searchCategoryTitle = ''; search()"
+          (keyup)="search()"
+          [(ngModel)]="searchCategoryTitle"
+          matInput maxlength="256" placeholder="Search category"/>
+          <button
+          (click)="searchCategoryTitle = ''; search()"
+          *ngIf="inputSearchCategory.value.trim().length > 0" aria-label="Clear"
+          class="search-category-button size25 gray"
+          mat-button mat-icon-button matSuffix>
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
 
       <li class="nav-item category" (click)="showTasksByCategory(null)"
           [class.active]="selectedCategory === null">
@@ -16,6 +40,11 @@
           <span class="all-category-title">All</span>
         </a>
       </li>
+                <!-- border -->
+      <div class="line"></div>
+      <div *ngIf="categories.length === 0">
+        <p class="not-found">Not found</p>
+      </div>
 
       <li class="nav-item pointer" (click)="showTasksByCategory(category)"
           *ngFor="let category of categories; let index = index"
@@ -23,7 +52,9 @@
       (mouseleave)="showEditIcon(null)"
       (mouseenter)="showEditIcon(index)">
         <a class="nav-link">
+          <!--category title-->
           <span class="category-title">{{category.title}}</span>
+          <!--edit button-->
           <span class="edit-category-icon-area">
             <mat-icon class="edit-category-icon"
               *ngIf="indexMouseMove === index"

@@ -11,11 +11,11 @@
       *ngIf="categoryTitle.trim().length > 0"
       class="clear-icon size25"
       mat-button matSuffix mat-icon-button aria-label="Clear"
-      (click)="categoryTitle= ''" >
+      (click)="categoryTitle= ''">
       <mat-icon>clear</mat-icon>
     </button>
   </mat-form-field>
- </mat-dialog-content>
+</mat-dialog-content>
 
 <mat-dialog-actions>
   <div class="col-12 text-center">
@@ -32,7 +32,8 @@
     <button
       mat-button class="red"
       *ngIf="canDelete"
-      (click)="delete()">Delete</button>
+      (click)="delete()">Delete
+    </button>
   </div>
 
 </mat-dialog-actions>

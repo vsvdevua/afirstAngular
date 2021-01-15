@@ -8,6 +8,8 @@ import {EditTaskDialogComponent} from '../../dialog/edit-task-dialog/edit-task-d
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogComponent} from '../../dialog/confirm-dialog/confirm-dialog.component';
 import {Category} from '../../model/Category';
+import {Priority} from '../../model/Priority';
+import {OperType} from '../../dialog/OperType';
 
 @Component({
   selector: 'app-tasks',
@@ -18,6 +20,11 @@ export class TasksComponent implements OnInit {
   private displayedColumns: string[] = ['color', 'id', 'title', 'date', 'priority', 'category', 'operations', 'select'];
   private dataSource: MatTableDataSource<Task>;
   private tasks: Task[];
+  private searchTaskText: string;
+  private selectedStatusFilter: boolean = null;
+  private selectedPriorityFilter: Priority;
+  private priorities: Priority[];
+
   @ViewChild(MatPaginator, {static: false}) private paginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) private sort: MatSort;
 
@@ -30,6 +37,14 @@ export class TasksComponent implements OnInit {
   updateTask = new EventEmitter<Task>();
   @Output()
   selectCategory = new EventEmitter<Category>();
+  @Output()
+  filterByTitle = new EventEmitter<string>();
+  @Output()
+  filterByStatus = new EventEmitter<boolean>();
+  @Output()
+  filterByPriority = new EventEmitter<Priority>();
+  @Output()
+  addTask = new EventEmitter<Task>();
 
   @Input('tasks')
   private set setTasks(tasks: Task[]) {
@@ -37,10 +52,17 @@ export class TasksComponent implements OnInit {
     this.fillTable();
   }
 
+  @Input('priorities')
+  private set setPriorities(priorities: Priority[]) {
+    this.priorities = priorities;
+  }
+
+  @Input()
+  selectedCategory: Category;
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
-    this.fillTable();
+    this.onSelectCategory(null);
   }
 
   private getPriorityColor(task: Task): string {
@@ -85,7 +107,7 @@ export class TasksComponent implements OnInit {
 
   private openEditTaskDialog(task: Task): void {
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
-      data: [task, 'Redact task'],
+      data: [task, 'Redact task', OperType.EDIT],
       autoFocus: false
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -134,5 +156,39 @@ export class TasksComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private onSelectCategory(category: Category) {
     this.selectCategory.emit(category);
+  }
+
+  // tslint:disable-next-line:typedef
+  private onFilterByTitle() {
+    this.filterByTitle.emit(this.searchTaskText);
+  }
+
+  // tslint:disable-next-line:typedef
+  private onFilterByStatus(value: boolean) {
+    if (value !== this.selectedStatusFilter) {
+      this.selectedStatusFilter = value;
+      this.filterByStatus.emit(this.selectedStatusFilter);
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  private onFilterByPriority(value: Priority) {
+    if (value !== this.selectedPriorityFilter) {
+      this.selectedPriorityFilter = value;
+      this.filterByPriority.emit(this.selectedPriorityFilter);
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  private openAddTaskDialog() {
+    const task = new Task(null, '', false, null, this.selectedCategory);
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+      data: [task, 'Add task', OperType.ADD]
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addTask.emit(task);
+      }
+    });
   }
 }

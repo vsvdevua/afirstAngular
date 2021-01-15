@@ -2,6 +2,8 @@
 <app-categories (selectCategory)="onSelectCategory($event)"
                 (deleteCategory)="onDeleteCategory($event)"
                 (updateCategory)="onUpdateCategory($event)"
+                (addCategory)="onAddCategory($event)"
+                (searchCategory)="onSearchCategory($event)"
                 [selectedCategory]="selectedCategory"
                 [categories]="categories"></app-categories>
 
@@ -10,7 +12,7 @@
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
       <div class="container-fluid">
         <div class="navbar-wrapper">
-          <a class="navbar-brand" href="javascript:;">Dashboard</a>
+          <a class="navbar-brand" href="#pablo">Dashboard</a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
           <span class="sr-only">Toggle navigation</span>
@@ -30,7 +32,7 @@
           </form>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="javascript:;">
+              <a class="nav-link" href="#pablo">
                 <i class="material-icons">dashboard</i>
                 <p class="d-lg-none d-md-block">
                   Stats
@@ -78,10 +80,17 @@
         <div class="row">
 
           <div class="col-12">
-         <app-tasks [tasks]="tasks"
+         <app-tasks
                     (updateTask)="onUpdateTask($event)"
                     (deleteTask)="onDeleteTask($event)"
                     (selectCategory)="onSelectCategory($event)"
+                    (addTask)="onAddTask($event)"
+                    [selectedCategory]="selectedCategory"
+                    (filterByStatus)="onFilterTasksByStatus($event)"
+                    (filterByPriority)="onFilterTasksByPriority($event)"
+                    (filterByTitle)="onSearchTasks($event)"
+                    [tasks]="tasks"
+                    [priorities]="priorities"
          ></app-tasks>
           </div>
         </div>

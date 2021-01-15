@@ -3,6 +3,7 @@ import {DataHandlerService} from '../../service/data-handler.service';
 import {Category} from '../../model/Category';
 import {EditCategoryDialogComponent} from '../../dialog/edit-category-dialog/edit-category-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {OperType} from '../../dialog/OperType';
 
 
 @Component({
@@ -21,8 +22,13 @@ export class CategoriesComponent implements OnInit {
   deleteCategory = new EventEmitter<Category>();
   @Output()
   updateCategory = new EventEmitter<Category>();
+  @Output()
+  addCategory = new EventEmitter<string>();
+  @Output()
+  searchCategory = new EventEmitter<string>();
+
   private indexMouseMove: number;
-  private showEditIconCategory: boolean;
+  private searchCategoryTitle: string;
 
   constructor(private dataHandler: DataHandlerService,
               private dialog: MatDialog) {
@@ -50,7 +56,7 @@ export class CategoriesComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private openEditDialog(category: Category) {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
-      data: [category.title, 'Redact category'],
+      data: [category.title, 'Redact category', OperType.EDIT],
       width: '400px'
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -58,11 +64,32 @@ export class CategoriesComponent implements OnInit {
         this.deleteCategory.emit(category);
         return;
       }
-      if (typeof (result) === 'string') {
+      if (result as string) {
         category.title = result as string;
         this.updateCategory.emit(category);
         return;
       }
     });
+  }
+
+  // tslint:disable-next-line:typedef
+  private openAddDialog() {
+    const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
+      data: ['', 'Add category', OperType.ADD],
+      width: '400px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addCategory.emit(result as string);
+      }
+    });
+  }
+
+  // tslint:disable-next-line:typedef
+  private search() {
+    if (this.searchCategoryTitle == null) {
+      return;
+    }
+    this.searchCategory.emit(this.searchCategoryTitle);
   }
 }

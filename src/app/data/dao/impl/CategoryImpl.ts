@@ -5,12 +5,16 @@ import {TestData} from '../../TestData';
 
 export class CategoryImpl implements CategoryDao {
   add(category: Category): Observable<Category> {
-    return undefined;
+    if (category.id === null || category.id === 0) {
+      category.id = this.getLastIdCategory();
+    }
+    TestData.categories.push(category);
+    return of(category);
   }
 
   delete(id: number): Observable<Category> {
     TestData.tasks.forEach(task => {
-      if (task.category && task.category.id === id){
+      if (task.category && task.category.id === id) {
         task.category = null;
       }
     });
@@ -28,7 +32,9 @@ export class CategoryImpl implements CategoryDao {
   }
 
   search(title: string): Observable<Category[]> {
-    return undefined;
+    return of(TestData.categories.filter(
+      cat => cat.title.toUpperCase().includes(title.toUpperCase())
+    ).sort((c1, c2) => c1.title.localeCompare(c2.title)));
   }
 
   update(category: Category): Observable<Category> {
@@ -37,4 +43,7 @@ export class CategoryImpl implements CategoryDao {
     return of(tmpCategory);
   }
 
+  private getLastIdCategory(): number {
+    return Math.max.apply(Math, TestData.categories.map(category => category.id)) + 1;
+  }
 }

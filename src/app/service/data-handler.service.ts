@@ -50,4 +50,16 @@ export class DataHandlerService {
   updateCategory(category: Category): Observable<Category> {
     return this.categoryImpl.update(category);
   }
+
+  addTask(task: Task): Observable<Task> {
+    return this.taskImpl.add(task);
+  }
+
+  addCategory(title: string): Observable<Category> {
+    return this.categoryImpl.add(new Category(null, title));
+  }
+
+  searchCategories(title: string): Observable<Category[]> {
+    return this.categoryImpl.search(title);
+  }
 }

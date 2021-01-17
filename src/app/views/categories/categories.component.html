@@ -4,7 +4,7 @@
 
     Tip 2: you can also add an image using data-image tag
 -->
-  <div id="categories">
+ <div id="categories">
   <div class="logo">
     <span class="nav-title">Categories</span>
     <span class="add-icon-area">
@@ -39,6 +39,7 @@
           [class.active]="selectedCategory === null">
         <a class="nav-link pointer">
           <span class="all-category-title">All</span>
+          <span class="uncompleted-count">{{uncompletedTotal}}</span>
         </a>
       </li>
                 <!-- border -->
@@ -47,20 +48,21 @@
         <p class="not-found">Not found</p>
       </div>
 
-      <li class="nav-item pointer" (click)="showTasksByCategory(category)"
-          *ngFor="let category of categories; let index = index"
-      [class.active]="category === selectedCategory"
+      <li class="nav-item pointer" (click)="showTasksByCategory(mapValue.key)"
+          *ngFor="let mapValue of selectedCategoryMap | keyvalue; let index = index"
+      [class.active]="mapValue.key === selectedCategory"
       (mouseleave)="showEditIcon(null)"
       (mouseenter)="showEditIcon(index)">
         <a class="nav-link">
           <!--category title-->
-          <span class="category-title">{{category.title}}</span>
+          <span class="category-title">{{mapValue.key.title}}</span>
           <!--edit button-->
           <span class="edit-category-icon-area">
             <mat-icon class="edit-category-icon"
               *ngIf="indexMouseMove === index"
-              (click)="$event.stopPropagation(); openEditDialog(category)">edit</mat-icon>
+              (click)="$event.stopPropagation(); openEditDialog(mapValue.key)">edit</mat-icon>
           </span>
+          <span class="uncompleted-count">{{mapValue.value}}</span>
         </a>
       </li>
 

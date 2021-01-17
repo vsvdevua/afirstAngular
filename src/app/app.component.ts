@@ -4,6 +4,7 @@ import {DataHandlerService} from './service/data-handler.service';
 import {Category} from './model/Category';
 import {Priority} from './model/Priority';
 import {zip} from 'rxjs';
+import {concatMap, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit {
   private uncompletedCountInCategory: number;
   private uncompletedTotalTasksCount: number;
   private showStat = true;
+  private categoryMap = new Map<Category, number>();
 
   constructor(private dataHandler: DataHandlerService) {
   }
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
     this.dataHandler.getCategories().subscribe(categories => this.categories = categories);
+    this.fillCategories();
     this.onSelectCategory(null);
   }
 
@@ -49,7 +52,9 @@ export class AppComponent implements OnInit {
   private onDeleteCategory(category: Category) {
     this.dataHandler.deleteCategory(category.id).subscribe(cat => {
       this.selectedCategory = null;
-      this.onSelectCategory(null);
+      this.categoryMap.delete(cat);
+      this.onSearchCategory(this.searchCategoryText);
+      this.updateTasks();
     });
   }
 
@@ -62,7 +67,7 @@ export class AppComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   private onAddCategory(title: string) {
-    this.dataHandler.addCategory(title).subscribe(() => this.updateCategories());
+    this.dataHandler.addCategory(title).subscribe(() => this.fillCategories());
   }
 
   // tslint:disable-next-line:typedef
@@ -75,6 +80,18 @@ export class AppComponent implements OnInit {
     this.searchCategoryText = title;
     this.dataHandler.searchCategories(title).subscribe(categories => {
       this.categories = categories;
+      this.fillCategories();
+    });
+  }
+
+  // tslint:disable-next-line:typedef
+  private fillCategories() {
+    if (this.categoryMap) {
+      this.categoryMap.clear();
+    }
+    this.categories = this.categories.sort((a, b) => a.title.localeCompare(b.title));
+    this.categories.forEach(cat => {
+      this.dataHandler.getUncompletedCountInCategory(cat).subscribe(count => this.categoryMap.set(cat, count));
     });
   }
 
@@ -84,14 +101,24 @@ export class AppComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   private onUpdateTask(task: Task) {
-    this.dataHandler.updateTask(task).subscribe(cat => {
+    this.dataHandler.updateTask(task).subscribe(() => {
+      this.fillCategories();
       this.updateTasksAndStat();
     });
   }
 
   // tslint:disable-next-line:typedef
   private onDeleteTask(task: Task) {
-    this.dataHandler.deleteTask(task.id).subscribe(cat => {
+    this.dataHandler.deleteTask(task.id).pipe(concatMap(t => {
+        return this.dataHandler.getUncompletedCountInCategory(t.category).pipe(map(count => {
+          return ({t, count});
+        }));
+      }
+    )).subscribe(result => {
+      const t = result.t as Task;
+      if (t.category){
+        this.categoryMap.set(t.category, result.count);
+      }
       this.updateTasksAndStat();
     });
   }
@@ -110,7 +137,18 @@ export class AppComponent implements OnInit {
 
 // tslint:disable-next-line:typedef
   private onAddTask(task: Task) {
-    this.dataHandler.addTask(task).subscribe(result => {
+    this.dataHandler.addTask(task).pipe(
+      concatMap(t => {
+          return this.dataHandler.getUncompletedCountInCategory(task.category).pipe(map(count => {
+            return ({t: task, count});
+          }));
+        }
+      )
+    ).subscribe(result => {
+      const t = result.t as Task;
+      if (t.category) {
+        this.categoryMap.set(t.category, result.count);
+      }
       this.updateTasksAndStat();
     });
   }

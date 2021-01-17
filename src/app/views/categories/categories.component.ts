@@ -16,6 +16,14 @@ export class CategoriesComponent implements OnInit {
   categories: Category[];
   @Input()
   selectedCategory: Category;
+  @Input()
+  uncompletedTotal: number;
+
+  @Input('categoryMap')
+  set setCategoryMap(categotyMap: Map<Category, number>) {
+    this.selectedCategoryMap = categotyMap;
+  }
+
   @Output()
   selectCategory = new EventEmitter<Category>();
   @Output()
@@ -29,13 +37,13 @@ export class CategoriesComponent implements OnInit {
 
   private indexMouseMove: number;
   private searchCategoryTitle: string;
+  private selectedCategoryMap: Map<Category, number>;
 
   constructor(private dataHandler: DataHandlerService,
               private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    // @ts-ignore
     // this.dataHandler.getCategories().subscribe(categories => this.categories = categories);
 
   }
@@ -48,13 +56,13 @@ export class CategoriesComponent implements OnInit {
     this.selectCategory.emit(this.selectedCategory);
   }
 
-  // tslint:disable-next-line:typedef
-  private showEditIcon(index: number) {
+
+  private showEditIcon(index: number): void {
     this.indexMouseMove = index;
   }
 
-  // tslint:disable-next-line:typedef
-  private openEditDialog(category: Category) {
+
+  private openEditDialog(category: Category): void {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       data: [category.title, 'Redact category', OperType.EDIT],
       width: '400px'
@@ -72,8 +80,8 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private openAddDialog() {
+
+  private openAddDialog(): void {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       data: ['', 'Add category', OperType.ADD],
       width: '400px'
@@ -85,8 +93,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private search() {
+  private search(): void {
     if (this.searchCategoryTitle == null) {
       return;
     }

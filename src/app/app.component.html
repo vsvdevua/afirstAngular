@@ -1,50 +1,52 @@
 <script src="app.module.ts"></script>
 <div class="wrapper ">
-<app-categories (selectCategory)="onSelectCategory($event)"
-                (deleteCategory)="onDeleteCategory($event)"
-                (updateCategory)="onUpdateCategory($event)"
-                (addCategory)="onAddCategory($event)"
-                (searchCategory)="onSearchCategory($event)"
-                [selectedCategory]="selectedCategory"
-                [categories]="categories"></app-categories>
+  <app-categories (selectCategory)="onSelectCategory($event)"
+                  (deleteCategory)="onDeleteCategory($event)"
+                  (updateCategory)="onUpdateCategory($event)"
+                  (addCategory)="onAddCategory($event)"
+                  (searchCategory)="onSearchCategory($event)"
+                  [selectedCategory]="selectedCategory"
+                  [categories]="categories"
+                  [categoryMap]="categoryMap"
+                  [uncompletedTotal]="uncompletedTotalTasksCount"></app-categories>
 
   <div class="main-panel">
     <!-- Navbar -->
-    <!--  <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">-->
-  <app-header
-  [categoryName]="selectedCategory ? selectedCategory.title : 'All'"
-  (toggleStat)="toggleStat($event)"
-  [showStat]="showStat"></app-header>
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
+      <app-header
+        [categoryName]="selectedCategory ? selectedCategory.title : 'All'"
+        (toggleStat)="toggleStat($event)"
+        [showStat]="showStat"></app-header>
       <!-- End Navbar -->
-    <!--  </nav>-->
-      <div class="content">
-        <div class="container-fluid">
-  <app-statistic
-  [totalTasksInCategory]="totalTasksCountInCategory"
-  [completeTasksInCategory]="completedCountInCategory"
-  [uncompleteTasksInCategory]="uncompletedCountInCategory"
-  [showStat]="showStat"></app-statistic>
-          <div class="row">
+    </nav>
+    <div class="content">
+      <div class="container-fluid">
+        <app-statistic
+          [totalTasksInCategory]="totalTasksCountInCategory"
+          [completeTasksInCategory]="completedCountInCategory"
+          [uncompleteTasksInCategory]="uncompletedCountInCategory"
+          [showStat]="showStat"></app-statistic>
+        <div class="row">
 
-            <div class="col-12">
-           <app-tasks
-                      (updateTask)="onUpdateTask($event)"
-                      (deleteTask)="onDeleteTask($event)"
-                      (selectCategory)="onSelectCategory($event)"
-                      (addTask)="onAddTask($event)"
-                      [selectedCategory]="selectedCategory"
-                      (filterByStatus)="onFilterTasksByStatus($event)"
-                      (filterByPriority)="onFilterTasksByPriority($event)"
-                      (filterByTitle)="onSearchTasks($event)"
-                      [tasks]="tasks"
-                      [priorities]="priorities"
-           ></app-tasks>
-            </div>
+          <div class="col-12">
+            <app-tasks
+              (updateTask)="onUpdateTask($event)"
+              (deleteTask)="onDeleteTask($event)"
+              (selectCategory)="onSelectCategory($event)"
+              (addTask)="onAddTask($event)"
+              [selectedCategory]="selectedCategory"
+              (filterByStatus)="onFilterTasksByStatus($event)"
+              (filterByPriority)="onFilterTasksByPriority($event)"
+              (filterByTitle)="onSearchTasks($event)"
+              [tasks]="tasks"
+              [priorities]="priorities"
+            ></app-tasks>
           </div>
         </div>
       </div>
-  <app-footer></app-footer>
     </div>
+    <app-footer></app-footer>
   </div>
+</div>
 
 

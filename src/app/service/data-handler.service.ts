@@ -62,4 +62,20 @@ export class DataHandlerService {
   searchCategories(title: string): Observable<Category[]> {
     return this.categoryImpl.search(title);
   }
+
+  getCompletedCountInCategory(category: Category): Observable<number> {
+    return this.taskImpl.getCompletedCountInCategory(category);
+  }
+
+  getTotalCountInCategory(category: Category): Observable<number> {
+    return this.taskImpl.getTotalCountInCategory(category);
+  }
+
+  getUncompletedCountInCategory(category: Category): Observable<number> {
+    return this.taskImpl.getUncompletedCountInCategory(category);
+  }
+
+  getUncomletedTotalCount(): Observable<number> {
+    return this.taskImpl.getUncompletedCountInCategory(null);
+  }
 }

@@ -3,6 +3,7 @@ import {Task} from './model/Task';
 import {DataHandlerService} from './service/data-handler.service';
 import {Category} from './model/Category';
 import {Priority} from './model/Priority';
+import {zip} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,10 @@ export class AppComponent implements OnInit {
   private statusFilter: boolean;
   private priorityFilter: Priority;
   private searchCategoryText = '';
+  private totalTasksCountInCategory: number;
+  private completedCountInCategory: number;
+  private uncompletedCountInCategory: number;
+  private uncompletedTotalTasksCount: number;
 
   constructor(private dataHandler: DataHandlerService) {
   }
@@ -36,7 +41,7 @@ export class AppComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private onSelectCategory(category: Category) {
     this.selectedCategory = category;
-    this.updateTasks();
+    this.updateTasksAndStat();
   }
 
 // tslint:disable-next-line:typedef
@@ -79,14 +84,14 @@ export class AppComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private onUpdateTask(task: Task) {
     this.dataHandler.updateTask(task).subscribe(cat => {
-      this.updateTasks();
+      this.updateTasksAndStat();
     });
   }
 
   // tslint:disable-next-line:typedef
   private onDeleteTask(task: Task) {
     this.dataHandler.deleteTask(task.id).subscribe(cat => {
-      this.updateTasks();
+      this.updateTasksAndStat();
     });
   }
 
@@ -105,7 +110,7 @@ export class AppComponent implements OnInit {
 // tslint:disable-next-line:typedef
   private onAddTask(task: Task) {
     this.dataHandler.addTask(task).subscribe(result => {
-      this.updateTasks();
+      this.updateTasksAndStat();
     });
   }
 
@@ -130,6 +135,26 @@ export class AppComponent implements OnInit {
     this.priorityFilter = priority;
     this.updateTasks();
   }
+  /*
+   methods for statistics
+    */
+  private updateTasksAndStat(): void{
+    this.updateTasks();
+    this.updateSatat();
+  }
 
-
+  private updateSatat(): void {
+    zip(
+      this.dataHandler.getTotalCountInCategory(this.selectedCategory),
+      this.dataHandler.getCompletedCountInCategory(this.selectedCategory),
+      this.dataHandler.getUncompletedCountInCategory(this.selectedCategory),
+      this.dataHandler.getUncomletedTotalCount()
+    )
+      .subscribe( array => {
+        this.totalTasksCountInCategory = array[0];
+        this.completedCountInCategory = array[1];
+        this.uncompletedCountInCategory = array[2];
+        this.uncompletedTotalTasksCount = array[3];
+      });
+  }
 }

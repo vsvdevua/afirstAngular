@@ -31,19 +31,19 @@ export class TaskImpl implements TaskDao {
   }
 
   getCompletedCountInCategory(category: Category): Observable<number> {
-    return undefined;
+    return of(this.searhTasks(category, null, true, null).length);
   }
 
   getTotalCount(): Observable<number> {
-    return undefined;
+    return of(TestData.tasks.length);
   }
 
   getTotalCountInCategory(category: Category): Observable<number> {
-    return undefined;
+    return of(this.searhTasks(category, null, null, null).length);
   }
 
   getUncompletedCountInCategory(category: Category): Observable<number> {
-    return undefined;
+    return of(this.searhTasks(category, null, false, null).length);
   }
 
   search(category: Category, searchText: string, status: boolean, priority: Priority): Observable<Task[]> {

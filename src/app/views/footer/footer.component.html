@@ -1,0 +1,33 @@
+<footer class="footer">
+  <div class="container-fluid">
+    <nav class="float-left">
+      <ul>
+        <li>
+          <a [href]="site">
+            VSVDev
+          </a>
+        </li>
+        <li>
+          <a (click)="openAboutDialog()" class="link">
+            About
+          </a>
+        </li>
+        <li>
+          <a [href]="blog">
+            Blog
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/vsvdevua">
+            Licenses
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="copyright float-right">
+      &copy;
+     {{year | date: 'yyyy'}}, made with <i class="material-icons">favorite</i> by
+      <a [href]="site" target="_blank">{{siteName}}</a> for a better web.
+    </div>
+  </div>
+</footer>

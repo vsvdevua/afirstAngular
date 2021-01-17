@@ -19,9 +19,10 @@ export class DataHandlerService {
   constructor() {
   }
 
-  getCategories(): Observable<Category[]> {
-    return this.categoryImpl.getAll();
-  }
+  /*
+  Task
+   */
+
 
   getAllTasks(): Observable<Task[]> {
     return this.taskImpl.getAll();
@@ -35,14 +36,19 @@ export class DataHandlerService {
     return this.taskImpl.update(task);
   }
 
-  getAllPriorities(): Observable<Priority[]> {
-    return this.priorityImpl.getAll();
-  }
 
   deleteTask(id: number): Observable<Task> {
     return this.taskImpl.delete(id);
   }
 
+
+  addTask(task: Task): Observable<Task> {
+    return this.taskImpl.add(task);
+  }
+
+  /*
+  Category
+   */
   deleteCategory(id: number): Observable<Category> {
     return this.categoryImpl.delete(id);
   }
@@ -51,8 +57,8 @@ export class DataHandlerService {
     return this.categoryImpl.update(category);
   }
 
-  addTask(task: Task): Observable<Task> {
-    return this.taskImpl.add(task);
+  getCategories(): Observable<Category[]> {
+    return this.categoryImpl.getAll();
   }
 
   addCategory(title: string): Observable<Category> {
@@ -77,5 +83,24 @@ export class DataHandlerService {
 
   getUncomletedTotalCount(): Observable<number> {
     return this.taskImpl.getUncompletedCountInCategory(null);
+  }
+
+  /*
+  Priority
+   */
+  getAllPriorities(): Observable<Priority[]> {
+    return this.priorityImpl.getAll();
+  }
+
+  updatePriority(priority: Priority): Observable<Priority> {
+    return this.priorityImpl.update(priority);
+  }
+
+  deletePriority(id: number): Observable<Priority> {
+    return this.priorityImpl.delete(id);
+  }
+
+  addPriority(priority: Priority): Observable<Priority> {
+    return this.priorityImpl.add(priority);
   }
 }

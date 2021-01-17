@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   private completedCountInCategory: number;
   private uncompletedCountInCategory: number;
   private uncompletedTotalTasksCount: number;
+  private showStat = true;
 
   constructor(private dataHandler: DataHandlerService) {
   }
@@ -135,10 +136,11 @@ export class AppComponent implements OnInit {
     this.priorityFilter = priority;
     this.updateTasks();
   }
+
   /*
    methods for statistics
     */
-  private updateTasksAndStat(): void{
+  private updateTasksAndStat(): void {
     this.updateTasks();
     this.updateSatat();
   }
@@ -150,11 +152,15 @@ export class AppComponent implements OnInit {
       this.dataHandler.getUncompletedCountInCategory(this.selectedCategory),
       this.dataHandler.getUncomletedTotalCount()
     )
-      .subscribe( array => {
+      .subscribe(array => {
         this.totalTasksCountInCategory = array[0];
         this.completedCountInCategory = array[1];
         this.uncompletedCountInCategory = array[2];
         this.uncompletedTotalTasksCount = array[3];
       });
+  }
+
+  private toggleStat(showStat: boolean): void {
+    this.showStat = showStat;
   }
 }

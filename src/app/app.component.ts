@@ -28,9 +28,18 @@ export class AppComponent implements OnInit {
   private uncompletedTotalTasksCount: number;
   private showStat = true;
   private categoryMap = new Map<Category, number>();
+  private menuOpened: boolean;
+  private menuMode: string;
+  private menuPosition: string;
+  private showBackdrop: boolean;
+  private isMobile: boolean;
+  private isTable: boolean;
 
   constructor(private dataHandler: DataHandlerService,
-              private introService: IntroService) {
+              private introService: IntroService,
+              // private deviceService: DeviceDetectorService
+  ) {
+    this.setMenuValues();
   }
 
   ngOnInit(): void {
@@ -119,7 +128,7 @@ export class AppComponent implements OnInit {
       }
     )).subscribe(result => {
       const t = result.t as Task;
-      if (t.category){
+      if (t.category) {
         this.categoryMap.set(t.category, result.count);
       }
       this.updateTasksAndStat();
@@ -203,5 +212,18 @@ export class AppComponent implements OnInit {
 
   private toggleStat(showStat: boolean): void {
     this.showStat = showStat;
+  }
+
+  private onClosedMenu(): void {
+    this.menuOpened = false;
+  }
+private setMenuValues(): void{
+    this.menuPosition = 'left';
+    this.menuOpened = true;
+    this.menuMode = 'push';
+    this.showBackdrop = false;
+}
+  private toggleMenu(): void {
+    this.menuOpened = !this.menuOpened;
   }
 }

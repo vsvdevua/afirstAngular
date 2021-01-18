@@ -1,5 +1,15 @@
-<script src="app.module.ts"></script>
-<div class="wrapper ">
+<ng-sidebar-container style="height: 100vh">
+  <ng-sidebar
+    [opened]="menuOpened"
+    [closeOnClickOutside]="false"
+    [closeOnClickBackdrop]="true"
+    [showBackdrop]="showBackdrop"
+    [mode]="menuMode"
+    [animate]="true"
+    [position]="menuPosition"
+    [autoFocus]="false"
+    (onClosed)="onClosedMenu()">
+
  <div class="sidebar"
  data-color="purple"
  data-step="1"
@@ -15,18 +25,21 @@
                   [categoryMap]="categoryMap"
                   [uncompletedTotal]="uncompletedTotalTasksCount"></app-categories>
  </div>
-  <div class="main-panel">
+  </ng-sidebar>
+  <div ng-sidebar-content>
+    <div class="main-panel">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
       <app-header
         [categoryName]="selectedCategory ? selectedCategory.title : 'All'"
         (toggleStat)="toggleStat($event)"
-        [showStat]="showStat"></app-header>
+        [showStat]="showStat"
+      (toggleMenu)="toggleMenu()"></app-header>
       <!-- End Navbar -->
-    </nav>
-    <div class="content">
-      <div class="container-fluid">
-        <div data-step="2"
+     </nav>
+      <div class="content">
+        <div class="container-fluid">
+          <div data-step="2"
              data-intro="List all tasks with oppornity to redact and search"
              data-position="bottom">
         <app-statistic
@@ -56,6 +69,5 @@
     </div>
     <app-footer></app-footer>
   </div>
-</div>
-
-
+  </div>
+</ng-sidebar-container>

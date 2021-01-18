@@ -1,8 +1,10 @@
 <div class="container-fluid">
-  <div class="row ">
+  <div class="row settings">
 
   <div class="col-9 text-left align-self-top">
-    <!--  <div  class="col-12 col-sm-6 col-md-8">-->
+  <button (click)="onToggleMenu()" mat-icon-button type="button">
+    <mat-icon>menu</mat-icon>
+  </button>
       <p class="navbar-brand">{{categoryName}}</p>
       <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="showStat">Hide statistic</p>
       <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="!showStat">Show statistic</p>

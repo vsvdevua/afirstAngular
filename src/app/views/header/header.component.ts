@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {SettingsDialogComponent} from '../../dialog/settings-dialog/settings-dialog.component';
+import {IntroService} from '../../service/intro.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
   @Output()
   toggleStat = new EventEmitter<boolean>();
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,
+              private introService: IntroService) {
   }
 
   ngOnInit(): void {
@@ -31,5 +33,9 @@ export class HeaderComponent implements OnInit {
       autoFocus: false,
       width: '500px'
     });
+  }
+
+  private showIntroHelp(): void {
+    this.introService.startIntroJS(false);
   }
 }

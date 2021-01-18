@@ -34,6 +34,7 @@ import { PrioritiesComponent } from './views/priorities/priorities.component';
 import { SettingsDialogComponent } from './dialog/settings-dialog/settings-dialog.component';
 import { EditPriorityDialogComponent } from './dialog/edit-priority-dialog/edit-priority-dialog.component';
 
+
 registerLocaleData(localeRu);
 
 @NgModule({
@@ -52,7 +53,7 @@ registerLocaleData(localeRu);
     StatisticCardComponent,
     PrioritiesComponent,
     SettingsDialogComponent,
-    EditPriorityDialogComponent
+    EditPriorityDialogComponent,
   ],
   imports: [
     BrowserModule,

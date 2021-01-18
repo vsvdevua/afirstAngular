@@ -5,6 +5,7 @@ import {Category} from './model/Category';
 import {Priority} from './model/Priority';
 import {zip} from 'rxjs';
 import {concatMap, map} from 'rxjs/operators';
+import {IntroService} from './service/intro.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ export class AppComponent implements OnInit {
   private showStat = true;
   private categoryMap = new Map<Category, number>();
 
-  constructor(private dataHandler: DataHandlerService) {
+  constructor(private dataHandler: DataHandlerService,
+              private introService: IntroService) {
   }
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class AppComponent implements OnInit {
     this.dataHandler.getCategories().subscribe(categories => this.categories = categories);
     this.fillCategories();
     this.onSelectCategory(null);
+    this.introService.startIntroJS(true);
   }
 
   /*

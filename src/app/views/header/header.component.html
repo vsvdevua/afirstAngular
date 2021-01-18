@@ -1,19 +1,21 @@
 <div class="container-fluid">
-  <div class="row settings">
+  <div class="row ">
 
-  <div class="col-10 text-left align-self-top">
-    <p class="navbar-brand">{{categoryName}}</p>
-    <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="showStat">Hide statistic</p>
-    <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="!showStat">Show statistic</p>
-  </div>
+  <div class="col-9 text-left align-self-top">
+    <!--  <div  class="col-12 col-sm-6 col-md-8">-->
+      <p class="navbar-brand">{{categoryName}}</p>
+      <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="showStat">Hide statistic</p>
+      <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="!showStat">Show statistic</p>
+    </div>
 
-  <div class="col-2 text-right align-self-top">
-    <button mat-icon-button class="header-icon" (click)="showSettings()">
-      <mat-icon>settings</mat-icon>
-    </button>
-    <button mat-icon-button class="header-icon">
-      <mat-ico>help</mat-ico>
-    </button>
+    <div class="col-3 text-right align-self-top">
+      <!--  <div class="col-6 col-md-4">-->
+      <button mat-icon-button class="header-icon" (click)="showSettings()">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button mat-icon-button class="header-icon" (click)="showIntroHelp()">
+        <mat-ico>help</mat-ico>
+      </button>
+    </div>
+    </div>
   </div>
-  </div>
-</div>

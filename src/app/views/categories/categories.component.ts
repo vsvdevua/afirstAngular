@@ -4,6 +4,7 @@ import {Category} from '../../model/Category';
 import {EditCategoryDialogComponent} from '../../dialog/edit-category-dialog/edit-category-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {OperType} from '../../dialog/OperType';
+import {DeviceDetectorService} from "ngx-device-detector";
 
 
 @Component({
@@ -38,9 +39,14 @@ export class CategoriesComponent implements OnInit {
   private indexMouseMove: number;
   private searchCategoryTitle: string;
   private selectedCategoryMap: Map<Category, number>;
+  private isMobile: boolean;
+  private isTablet: boolean;
 
   constructor(private dataHandler: DataHandlerService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private deviceService: DeviceDetectorService) {
+    this.isMobile = deviceService.isMobile();
+    this.isTablet = deviceService.isTablet();
   }
 
   ngOnInit(): void {

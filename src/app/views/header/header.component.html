@@ -1,7 +1,8 @@
+
 <div class="container-fluid">
   <div class="row settings">
 
-  <div class="col-9 text-left align-self-top">
+  <div class="col-10 text-left align-self-top">
   <button (click)="onToggleMenu()" mat-icon-button type="button">
     <mat-icon>menu</mat-icon>
   </button>
@@ -10,12 +11,12 @@
       <p class="link navbar-brand" (click)="onToggleStat()" *ngIf="!showStat && !isMobile">Show statistic</p>
     </div>
 
-    <div class="col-3 text-right align-self-top">
+    <div class="col-2 text-right align-self-top sss">
       <!--  <div class="col-6 col-md-4">-->
-      <button mat-icon-button class="header-icon" (click)="showSettings()">
+      <button mat-icon-button  (click)="showSettings()">
         <mat-icon>settings</mat-icon>
       </button>
-      <button mat-icon-button class="header-icon" *ngIf="!isMobile" (click)="showIntroHelp()">
+      <button mat-icon-button  *ngIf="!isMobile" (click)="showIntroHelp()">
         <mat-ico>help</mat-ico>
       </button>
     </div>

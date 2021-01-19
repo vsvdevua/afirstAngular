@@ -18,26 +18,25 @@ export class EditCategoryDialogComponent implements OnInit {
               private dialog: MatDialog) {
   }
 
-  // tslint:disable-next-line:typedef
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.categoryTitle = this.data[0];
     this.dialogTitle = this.data[1];
     this.operType = this.data[2];
-    // this.canDelete = true;
   }
 
-// tslint:disable-next-line:typedef
-  private onConfirm() {
+
+  private onConfirm(): void {
     this.dialogRef.close(this.categoryTitle);
   }
 
-// tslint:disable-next-line:typedef
-  private onCancel() {
+
+  private onCancel(): void {
     this.dialogRef.close(false);
   }
 
-// tslint:disable-next-line:typedef
-  private delete() {
+
+  private delete(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {

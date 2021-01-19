@@ -33,8 +33,7 @@ export class HeaderComponent implements OnInit {
     this.toggleStat.emit(!this.showStat);
   }
 
-  // tslint:disable-next-line:typedef
-  private showSettings() {
+  private showSettings(): void {
     const dialogRef = this.dialog.open(SettingsDialogComponent, {
       autoFocus: false,
       width: '500px'

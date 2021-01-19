@@ -60,14 +60,13 @@ export class AppComponent implements OnInit {
   methods for categories
    */
 
-  // tslint:disable-next-line:typedef
-  private onSelectCategory(category: Category) {
+
+  private onSelectCategory(category: Category): void {
     this.selectedCategory = category;
     this.updateTasksAndStat();
   }
 
-// tslint:disable-next-line:typedef
-  private onDeleteCategory(category: Category) {
+  private onDeleteCategory(category: Category): void {
     this.dataHandler.deleteCategory(category.id).subscribe(cat => {
       this.selectedCategory = null;
       this.categoryMap.delete(cat);
@@ -76,25 +75,23 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private onUpdateCategory(category: Category) {
+  private onUpdateCategory(category: Category): void {
     this.dataHandler.updateCategory(category).subscribe(() => {
       this.onSearchCategory(this.searchCategoryText);
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private onAddCategory(title: string) {
+
+  private onAddCategory(title: string): void {
     this.dataHandler.addCategory(title).subscribe(() => this.fillCategories());
   }
 
-  // tslint:disable-next-line:typedef
-  private updateCategories() {
+  private updateCategories(): void {
     this.dataHandler.getCategories().subscribe(categories => this.categories = categories);
   }
 
-  // tslint:disable-next-line:typedef
-  private onSearchCategory(title: string) {
+
+  private onSearchCategory(title: string): void {
     this.searchCategoryText = title;
     this.dataHandler.searchCategories(title).subscribe(categories => {
       this.categories = categories;
@@ -102,8 +99,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private fillCategories() {
+
+  private fillCategories(): void {
     if (this.categoryMap) {
       this.categoryMap.clear();
     }
@@ -117,16 +114,15 @@ export class AppComponent implements OnInit {
   methods for tasks
    */
 
-  // tslint:disable-next-line:typedef
-  private onUpdateTask(task: Task) {
+  private onUpdateTask(task: Task): void {
     this.dataHandler.updateTask(task).subscribe(() => {
       this.fillCategories();
       this.updateTasksAndStat();
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private onDeleteTask(task: Task) {
+
+  private onDeleteTask(task: Task): void {
     this.dataHandler.deleteTask(task.id).pipe(concatMap(t => {
         return this.dataHandler.getUncompletedCountInCategory(t.category).pipe(map(count => {
           return ({t, count});
@@ -141,8 +137,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private updateTasks() {
+  private updateTasks(): void {
     this.dataHandler.searchTasks(
       this.selectedCategory,
       this.searchTaskText,
@@ -153,8 +148,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-// tslint:disable-next-line:typedef
-  private onAddTask(task: Task) {
+  private onAddTask(task: Task): void {
     this.dataHandler.addTask(task).pipe(
       concatMap(t => {
           return this.dataHandler.getUncompletedCountInCategory(task.category).pipe(map(count => {
@@ -175,20 +169,19 @@ export class AppComponent implements OnInit {
   Filters
    */
 
-  // tslint:disable-next-line:typedef
-  private onFilterTasksByStatus(status: boolean) {
+  private onFilterTasksByStatus(status: boolean): void {
     this.statusFilter = status;
     this.updateTasks();
   }
 
-  // tslint:disable-next-line:typedef
-  private onSearchTasks(searchString: string) {
+
+  private onSearchTasks(searchString: string): void {
     this.searchTaskText = searchString;
     this.updateTasks();
   }
 
-// tslint:disable-next-line:typedef
-  private onFilterTasksByPriority(priority: Priority) {
+
+  private onFilterTasksByPriority(priority: Priority): void {
     this.priorityFilter = priority;
     this.updateTasks();
   }

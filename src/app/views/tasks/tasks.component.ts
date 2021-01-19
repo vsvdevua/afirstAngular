@@ -134,8 +134,7 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private openDeleteDialog(task: Task) {
+  private openDeleteDialog(task: Task): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
@@ -151,40 +150,40 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private onToggleStatus(task: Task) {
+  f
+
+  private onToggleStatus(task: Task): void {
     task.completed = !task.completed;
     this.updateTask.emit(task);
   }
 
-  // tslint:disable-next-line:typedef
-  private onSelectCategory(category: Category) {
+  private onSelectCategory(category: Category): void {
     this.selectCategory.emit(category);
   }
 
-  // tslint:disable-next-line:typedef
-  private onFilterByTitle() {
+
+  private onFilterByTitle(): void {
     this.filterByTitle.emit(this.searchTaskText);
   }
 
-  // tslint:disable-next-line:typedef
-  private onFilterByStatus(value: boolean) {
+
+  private onFilterByStatus(value: boolean): void {
     if (value !== this.selectedStatusFilter) {
       this.selectedStatusFilter = value;
       this.filterByStatus.emit(this.selectedStatusFilter);
     }
   }
 
-  // tslint:disable-next-line:typedef
-  private onFilterByPriority(value: Priority) {
+
+  private onFilterByPriority(value: Priority): void {
     if (value !== this.selectedPriorityFilter) {
       this.selectedPriorityFilter = value;
       this.filterByPriority.emit(this.selectedPriorityFilter);
     }
   }
 
-  // tslint:disable-next-line:typedef
-  private openAddTaskDialog() {
+
+  private openAddTaskDialog(): void {
     const task = new Task(null, '', false, null, this.selectedCategory);
     const dialogRef = this.dialog.open(EditTaskDialogComponent, {
       data: [task, 'Add task', OperType.ADD]
@@ -196,8 +195,8 @@ export class TasksComponent implements OnInit {
     });
   }
 
- private getMobilePriorityBgColor(task: Task): string {
-    if (task.priority != null && !task.completed){
+  private getMobilePriorityBgColor(task: Task): string {
+    if (task.priority != null && !task.completed) {
       return task.priority.color;
     }
     return 'none';

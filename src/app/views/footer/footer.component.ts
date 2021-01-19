@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {AboutComponent} from '../../dialog/about/about.component';
 
@@ -8,18 +8,19 @@ import {AboutComponent} from '../../dialog/about/about.component';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-private year: Date;
-private site = 'https://vsvdev.co.ua';
-private blog = 'https://vsvdev.co.ua/about';
-private siteName: 'VSVDev';
-  constructor(private dialog: MatDialog) { }
+  private year: Date;
+  private site = 'https://vsvdev.co.ua';
+  private blog = 'https://vsvdev.co.ua/about';
+  private siteName: 'VSVDev';
+
+  constructor(private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.year = new Date();
   }
 
-  // tslint:disable-next-line:typedef
- private openAboutDialog() {
+  private openAboutDialog(): void {
     this.dialog.open(AboutComponent, {
       autoFocus: false,
       data: {

@@ -8,7 +8,6 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
 import {OperType} from '../OperType';
 
 
-
 @Component({
   selector: 'app-edit-task-dialog',
   templateUrl: './edit-task-dialog.component.html',
@@ -32,8 +31,8 @@ export class EditTaskDialogComponent implements OnInit {
   ) {
   }
 
-  // tslint:disable-next-line:typedef
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.task = this.data[0];
     this.dialogTitle = this.data[1];
     this.operType = this.data[2];
@@ -57,8 +56,8 @@ export class EditTaskDialogComponent implements OnInit {
     this.dialogRef.close(null);
   }
 
-  // tslint:disable-next-line:typedef
-  private delete() {
+
+  private delete(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
@@ -74,13 +73,13 @@ export class EditTaskDialogComponent implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:typedef
-  private complete() {
+
+  private complete(): void {
     this.dialogRef.close('complete');
   }
 
-  // tslint:disable-next-line:typedef
-  private activate() {
+
+  private activate(): void {
     this.dialogRef.close('activate');
   }
 

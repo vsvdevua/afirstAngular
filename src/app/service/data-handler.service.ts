@@ -12,9 +12,9 @@ import {PriorityImpl} from '../data/dao/impl/PriorityImpl';
   providedIn: 'root'
 })
 export class DataHandlerService {
-  private taskImpl = new TaskImpl();
-  private categoryImpl = new CategoryImpl();
-  private priorityImpl = new PriorityImpl();
+   taskImpl = new TaskImpl();
+   categoryImpl = new CategoryImpl();
+   priorityImpl = new PriorityImpl();
 
   constructor() {
   }

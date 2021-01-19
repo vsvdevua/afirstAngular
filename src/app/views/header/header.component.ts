@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   toggleStat = new EventEmitter<boolean>();
   @Output()
   toggleMenu = new EventEmitter();
-  private isMobile: boolean;
+  isMobile: boolean;
 
   constructor(private dialog: MatDialog,
               private introService: IntroService,
@@ -29,22 +29,22 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private onToggleStat(): void {
+  onToggleStat(): void {
     this.toggleStat.emit(!this.showStat);
   }
 
-  private showSettings(): void {
+  showSettings(): void {
     const dialogRef = this.dialog.open(SettingsDialogComponent, {
       autoFocus: false,
       width: '500px'
     });
   }
 
-  private showIntroHelp(): void {
+  showIntroHelp(): void {
     this.introService.startIntroJS(false);
   }
 
-  private onToggleMenu(): void {
+  onToggleMenu(): void {
     this.toggleMenu.emit();
   }
 }

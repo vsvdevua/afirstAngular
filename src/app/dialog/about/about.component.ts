@@ -7,8 +7,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
-  private dialogTitle: string;
-  private message: string;
+  dialogTitle: string;
+  message: string;
 
   constructor(private dialogRef: MatDialogRef<AboutComponent>,
               @Inject(MAT_DIALOG_DATA) private data: { dialogTitle: string, message: string }) {
@@ -18,7 +18,8 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
   }
-private onConfirm(): void{
+
+  onConfirm(): void {
     this.dialogRef.close(true);
-}
+  }
 }

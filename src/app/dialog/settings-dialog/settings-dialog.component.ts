@@ -9,7 +9,7 @@ import {DataHandlerService} from '../../service/data-handler.service';
   styleUrls: ['./settings-dialog.component.css']
 })
 export class SettingsDialogComponent implements OnInit {
-  private priorities: Priority[];
+  priorities: Priority[];
 
   constructor(private dialogRef: MatDialogRef<SettingsDialogComponent>,
               private dataHandler: DataHandlerService) {
@@ -19,19 +19,19 @@ export class SettingsDialogComponent implements OnInit {
     this.dataHandler.getAllPriorities().subscribe(priorities => this.priorities = priorities);
   }
 
-  private onClose(): void {
+  onClose(): void {
     this.dialogRef.close(false);
   }
 
-  private onAddPriority(priority: Priority): void {
+  onAddPriority(priority: Priority): void {
     this.dataHandler.addPriority(priority).subscribe();
   }
 
-  private onDeletePriority(priority: Priority): void {
+  onDeletePriority(priority: Priority): void {
     this.dataHandler.deletePriority(priority.id).subscribe();
   }
 
-  private onUpdatePriority(priority: Priority): void {
+  onUpdatePriority(priority: Priority): void {
     this.dataHandler.updatePriority(priority).subscribe();
   }
 }

@@ -9,12 +9,12 @@ import {OperType} from '../OperType';
   styleUrls: ['./edit-category-dialog.component.css']
 })
 export class EditCategoryDialogComponent implements OnInit {
-  private dialogTitle: string;
-  private categoryTitle: string;
-  private operType: OperType;
+  dialogTitle: string;
+  categoryTitle: string;
+  operType: OperType;
 
   constructor(private dialogRef: MatDialogRef<EditCategoryDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: [string, string, OperType],
+              @Inject(MAT_DIALOG_DATA) private  data: [string, string, OperType],
               private dialog: MatDialog) {
   }
 
@@ -26,17 +26,17 @@ export class EditCategoryDialogComponent implements OnInit {
   }
 
 
-  private onConfirm(): void {
+  onConfirm(): void {
     this.dialogRef.close(this.categoryTitle);
   }
 
 
-  private onCancel(): void {
+  onCancel(): void {
     this.dialogRef.close(false);
   }
 
 
-  private delete(): void {
+  delete(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
@@ -52,7 +52,7 @@ export class EditCategoryDialogComponent implements OnInit {
     });
   }
 
-  private canDelete(): boolean {
+  canDelete(): boolean {
     return this.operType === OperType.EDIT;
   }
 }

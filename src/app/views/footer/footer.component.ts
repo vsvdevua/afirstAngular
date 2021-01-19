@@ -8,19 +8,19 @@ import {AboutComponent} from '../../dialog/about/about.component';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  private year: Date;
-  private site = 'https://vsvdev.co.ua';
-  private blog = 'https://vsvdev.co.ua/about';
-  private siteName: 'VSVDev';
+   year: Date;
+   site = 'https://vsvdev.co.ua';
+   blog = 'https://vsvdev.co.ua/about';
+   siteName: 'VSVDev';
 
-  constructor(private dialog: MatDialog) {
+  constructor( private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.year = new Date();
   }
 
-  private openAboutDialog(): void {
+   openAboutDialog(): void {
     this.dialog.open(AboutComponent, {
       autoFocus: false,
       data: {

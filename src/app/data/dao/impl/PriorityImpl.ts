@@ -38,7 +38,7 @@ export class PriorityImpl implements PriorityDao {
     return of(priority);
   }
 
-  private getLastIdPriority(): number {
+   getLastIdPriority(): number {
     return Math.max.apply(Math, TestData.priorities.map(c => c.id)) + 1;
   }
 }

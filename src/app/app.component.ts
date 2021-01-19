@@ -14,27 +14,27 @@ import {DeviceDetectorService} from "ngx-device-detector";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  private title = 'VSVDev';
-  private tasks: Task[];
-  private categories: Category[];
-  private priorities: Priority[];
-  private selectedCategory: Category = null;
-  private searchTaskText = '';
-  private statusFilter: boolean;
-  private priorityFilter: Priority;
-  private searchCategoryText = '';
-  private totalTasksCountInCategory: number;
-  private completedCountInCategory: number;
-  private uncompletedCountInCategory: number;
-  private uncompletedTotalTasksCount: number;
-  private showStat = true;
-  private categoryMap = new Map<Category, number>();
-  private menuOpened: boolean;
-  private menuMode: string;
-  private menuPosition: string;
-  private showBackdrop: boolean;
-  private isMobile: boolean;
-  private isTable: boolean;
+  title = 'VSVDev';
+  tasks: Task[];
+  categories: Category[];
+  priorities: Priority[];
+  selectedCategory: Category = null;
+  searchTaskText = '';
+  statusFilter: boolean;
+  priorityFilter: Priority;
+  searchCategoryText = '';
+  totalTasksCountInCategory: number;
+  completedCountInCategory: number;
+  uncompletedCountInCategory: number;
+  uncompletedTotalTasksCount: number;
+  showStat = true;
+  categoryMap = new Map<Category, number>();
+  menuOpened: boolean;
+  menuMode: string;
+  menuPosition: string;
+  showBackdrop: boolean;
+  isMobile: boolean;
+  isTable: boolean;
 
   constructor(private dataHandler: DataHandlerService,
               private introService: IntroService,
@@ -61,12 +61,12 @@ export class AppComponent implements OnInit {
    */
 
 
-  private onSelectCategory(category: Category): void {
+  onSelectCategory(category: Category): void {
     this.selectedCategory = category;
     this.updateTasksAndStat();
   }
 
-  private onDeleteCategory(category: Category): void {
+  onDeleteCategory(category: Category): void {
     this.dataHandler.deleteCategory(category.id).subscribe(cat => {
       this.selectedCategory = null;
       this.categoryMap.delete(cat);
@@ -75,23 +75,23 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private onUpdateCategory(category: Category): void {
+  onUpdateCategory(category: Category): void {
     this.dataHandler.updateCategory(category).subscribe(() => {
       this.onSearchCategory(this.searchCategoryText);
     });
   }
 
 
-  private onAddCategory(title: string): void {
+  onAddCategory(title: string): void {
     this.dataHandler.addCategory(title).subscribe(() => this.fillCategories());
   }
 
-  private updateCategories(): void {
+  updateCategories(): void {
     this.dataHandler.getCategories().subscribe(categories => this.categories = categories);
   }
 
 
-  private onSearchCategory(title: string): void {
+  onSearchCategory(title: string): void {
     this.searchCategoryText = title;
     this.dataHandler.searchCategories(title).subscribe(categories => {
       this.categories = categories;
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  private fillCategories(): void {
+  fillCategories(): void {
     if (this.categoryMap) {
       this.categoryMap.clear();
     }
@@ -114,7 +114,7 @@ export class AppComponent implements OnInit {
   methods for tasks
    */
 
-  private onUpdateTask(task: Task): void {
+  onUpdateTask(task: Task): void {
     this.dataHandler.updateTask(task).subscribe(() => {
       this.fillCategories();
       this.updateTasksAndStat();
@@ -122,7 +122,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  private onDeleteTask(task: Task): void {
+  onDeleteTask(task: Task): void {
     this.dataHandler.deleteTask(task.id).pipe(concatMap(t => {
         return this.dataHandler.getUncompletedCountInCategory(t.category).pipe(map(count => {
           return ({t, count});
@@ -137,7 +137,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private updateTasks(): void {
+  updateTasks(): void {
     this.dataHandler.searchTasks(
       this.selectedCategory,
       this.searchTaskText,
@@ -148,7 +148,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private onAddTask(task: Task): void {
+  onAddTask(task: Task): void {
     this.dataHandler.addTask(task).pipe(
       concatMap(t => {
           return this.dataHandler.getUncompletedCountInCategory(task.category).pipe(map(count => {
@@ -169,19 +169,19 @@ export class AppComponent implements OnInit {
   Filters
    */
 
-  private onFilterTasksByStatus(status: boolean): void {
+  onFilterTasksByStatus(status: boolean): void {
     this.statusFilter = status;
     this.updateTasks();
   }
 
 
-  private onSearchTasks(searchString: string): void {
+  onSearchTasks(searchString: string): void {
     this.searchTaskText = searchString;
     this.updateTasks();
   }
 
 
-  private onFilterTasksByPriority(priority: Priority): void {
+  onFilterTasksByPriority(priority: Priority): void {
     this.priorityFilter = priority;
     this.updateTasks();
   }
@@ -189,12 +189,12 @@ export class AppComponent implements OnInit {
   /*
    methods for statistics
     */
-  private updateTasksAndStat(): void {
+  updateTasksAndStat(): void {
     this.updateTasks();
     this.updateSatat();
   }
 
-  private updateSatat(): void {
+  updateSatat(): void {
     zip(
       this.dataHandler.getTotalCountInCategory(this.selectedCategory),
       this.dataHandler.getCompletedCountInCategory(this.selectedCategory),
@@ -209,15 +209,15 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private toggleStat(showStat: boolean): void {
+  toggleStat(showStat: boolean): void {
     this.showStat = showStat;
   }
 
-  private onClosedMenu(): void {
+  onClosedMenu(): void {
     this.menuOpened = false;
   }
 
-  private setMenuValues(): void {
+  setMenuValues(): void {
     this.menuPosition = 'left';
     if (this.isMobile) {
       this.menuOpened = false;
@@ -230,7 +230,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private toggleMenu(): void {
+  toggleMenu(): void {
     this.menuOpened = !this.menuOpened;
   }
 }

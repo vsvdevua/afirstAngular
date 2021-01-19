@@ -43,7 +43,7 @@ export class CategoryImpl implements CategoryDao {
     return of(tmpCategory);
   }
 
-  private getLastIdCategory(): number {
+   getLastIdCategory(): number {
     return Math.max.apply(Math, TestData.categories.map(category => category.id)) + 1;
   }
 }

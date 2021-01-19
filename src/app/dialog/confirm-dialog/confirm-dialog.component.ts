@@ -7,8 +7,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./confirm-dialog.component.css']
 })
 export class ConfirmDialogComponent implements OnInit {
-  private dialogTitle: string;
-  private message: string;
+  dialogTitle: string;
+  message: string;
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmDialogComponent>,
@@ -21,11 +21,11 @@ export class ConfirmDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private onConfirm(): void {
+  onConfirm(): void {
     this.dialogRef.close(true);
   }
 
-  private onCancel(): void {
+  onCancel(): void {
     this.dialogRef.close(false);
   }
 }

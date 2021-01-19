@@ -36,11 +36,11 @@ export class CategoriesComponent implements OnInit {
   @Output()
   searchCategory = new EventEmitter<string>();
 
-  private indexMouseMove: number;
-  private searchCategoryTitle: string;
-  private selectedCategoryMap: Map<Category, number>;
-  private isMobile: boolean;
-  private isTablet: boolean;
+  indexMouseMove: number;
+  searchCategoryTitle: string;
+  selectedCategoryMap: Map<Category, number>;
+  isMobile: boolean;
+  isTablet: boolean;
 
   constructor(private dataHandler: DataHandlerService,
               private dialog: MatDialog,
@@ -63,12 +63,12 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private showEditIcon(index: number): void {
+  showEditIcon(index: number): void {
     this.indexMouseMove = index;
   }
 
 
-  private openEditDialog(category: Category): void {
+  openEditDialog(category: Category): void {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       data: [category.title, 'Redact category', OperType.EDIT],
       width: '400px'
@@ -87,7 +87,7 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  private openAddDialog(): void {
+  openAddDialog(): void {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       data: ['', 'Add category', OperType.ADD],
       width: '400px'
@@ -99,7 +99,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  private search(): void {
+  search(): void {
     if (this.searchCategoryTitle == null) {
       return;
     }

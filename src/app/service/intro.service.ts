@@ -5,9 +5,9 @@ import * as introJs from 'intro.js/intro';
   providedIn: 'root'
 })
 export class IntroService {
-  private static INTRO_VIEWED_KEY = 'intro-viewed';
-  private static INTRO_VIEWED_VALUE = 'done';
-  private introJS = introJs();
+   static INTRO_VIEWED_KEY = 'intro-viewed';
+   static INTRO_VIEWED_VALUE = 'done';
+   introJS = introJs();
 
   constructor() {
   }

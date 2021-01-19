@@ -14,7 +14,7 @@ import {EditCategoryDialogComponent} from '../../dialog/edit-category-dialog/edi
 export class PrioritiesComponent implements OnInit {
   static defaultColor = '#fff';
   @Input()
-  private priorities: [Priority];
+  priorities: [Priority];
   @Output()
   deletePriority = new EventEmitter<Priority>();
   @Output()
@@ -29,7 +29,7 @@ export class PrioritiesComponent implements OnInit {
   }
 
 
-  private onEditPriority(priority: Priority): void {
+  onEditPriority(priority: Priority): void {
     const dialogRef = this.dialog.open(EditPriorityDialogComponent, {
       data: [priority.title, 'Redact priority', OperType.EDIT]
     });
@@ -46,7 +46,7 @@ export class PrioritiesComponent implements OnInit {
     });
   }
 
-  private delete(priority: Priority): void {
+  delete(priority: Priority): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
@@ -62,7 +62,7 @@ export class PrioritiesComponent implements OnInit {
     });
   }
 
-  private onAddPriority(): void {
+  onAddPriority(): void {
     const dialogRef = this.dialog.open(EditCategoryDialogComponent, {
       data: ['', 'Add priority', OperType.ADD],
       width: '400px'

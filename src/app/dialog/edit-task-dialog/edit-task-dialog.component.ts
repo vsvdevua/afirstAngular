@@ -14,15 +14,15 @@ import {OperType} from '../OperType';
   styleUrls: ['./edit-task-dialog.component.css']
 })
 export class EditTaskDialogComponent implements OnInit {
-  private dialogTitle: string;
-  private task: Task;
-  private tmpTitle: string;
-  private categories: Category[];
-  private tmpCategory: Category;
-  private priorities: Priority[];
-  private tmpPriority: Priority;
-  private tmpDate: Date;
-  private operType: OperType;
+  dialogTitle: string;
+  task: Task;
+  tmpTitle: string;
+  categories: Category[];
+  tmpCategory: Category;
+  priorities: Priority[];
+  tmpPriority: Priority;
+  tmpDate: Date;
+  operType: OperType;
 
   constructor(private dialogRef: MatDialogRef<EditTaskDialogComponent>,
               @Inject(MAT_DIALOG_DATA) private data: [Task, string, OperType],
@@ -44,7 +44,7 @@ export class EditTaskDialogComponent implements OnInit {
     this.dataHandler.getAllPriorities().subscribe(items => this.priorities = items);
   }
 
-  private onConfirm(): void {
+  onConfirm(): void {
     this.task.title = this.tmpTitle;
     this.task.category = this.tmpCategory;
     this.task.priority = this.tmpPriority;
@@ -52,12 +52,12 @@ export class EditTaskDialogComponent implements OnInit {
     this.dialogRef.close(this.task);
   }
 
-  private onCancel(): void {
+  onCancel(): void {
     this.dialogRef.close(null);
   }
 
 
-  private delete(): void {
+  delete(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
@@ -74,20 +74,20 @@ export class EditTaskDialogComponent implements OnInit {
   }
 
 
-  private complete(): void {
+  complete(): void {
     this.dialogRef.close('complete');
   }
 
 
-  private activate(): void {
+  activate(): void {
     this.dialogRef.close('activate');
   }
 
-  private canDelete(): boolean {
+  canDelete(): boolean {
     return this.operType === OperType.EDIT;
   }
 
-  private canActivateDesactivate(): boolean {
+  canActivateDesactivate(): boolean {
     return this.operType === OperType.EDIT;
   }
 }

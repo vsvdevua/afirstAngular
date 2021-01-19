@@ -9,12 +9,12 @@ import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component
   styleUrls: ['./edit-priority-dialog.component.css']
 })
 export class EditPriorityDialogComponent implements OnInit {
-  private dialogTitle: string;
-  private priorityTitle: string;
-  private operType: OperType;
+  dialogTitle: string;
+  priorityTitle: string;
+  operType: OperType;
 
   constructor(private dialogRef: MatDialogRef<EditPriorityDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: { sttring, string, OperType },
+              @Inject(MAT_DIALOG_DATA) private  data: { sttring, string, OperType },
               private dialog: MatDialog) {
   }
 
@@ -24,15 +24,15 @@ export class EditPriorityDialogComponent implements OnInit {
     this.operType = this.data[2];
   }
 
-  private onConfirm(): void {
+  onConfirm(): void {
     this.dialogRef.close(this.priorityTitle);
   }
 
-  private onCancel(): void {
+  onCancel(): void {
     this.dialogRef.close(false);
   }
 
-  private delete(): void {
+  delete(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: '500px',
       data: {
@@ -48,7 +48,7 @@ export class EditPriorityDialogComponent implements OnInit {
     });
   }
 
-  private canDelete(): boolean {
+  canDelete(): boolean {
     return this.operType === OperType.EDIT;
   }
 }

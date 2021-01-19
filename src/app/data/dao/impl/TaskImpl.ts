@@ -56,7 +56,7 @@ export class TaskImpl implements TaskDao {
     return of(task);
   }
 
-  private searhTasks(category: Category, searchText: string, status: boolean, priority: Priority): Task[] {
+   searhTasks(category: Category, searchText: string, status: boolean, priority: Priority): Task[] {
 
     let allTasks = TestData.tasks;
     if (status != null) {
@@ -76,7 +76,7 @@ export class TaskImpl implements TaskDao {
     return allTasks;
   }
 
-  private getLastIdTask(): number {
+   getLastIdTask(): number {
     return Math.max.apply(Math, TestData.tasks.map(task => task.id)) + 1;
   }
 }
